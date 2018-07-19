@@ -1,0 +1,9 @@
+{
+    "log": "1000handlers.log",
+    "type": "sync",
+    "wait": 0,
+    "runners": 1,
+    "minutes": 5,
+    "handlers": "/home/ubuntu/eval-olscheduler/handler_specs/1000handlers.txt",
+    "host": "localhost"
+}
