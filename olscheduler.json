@@ -1,0 +1,14 @@
+{
+    "host": "localhost",
+    "port": 8080,
+    "balancer": "pkg-aware",
+    "load-threshold": 3,
+    "registry": "/home/ubuntu/eval-olscheduler/registry_100_5.json",
+    "workers": [
+        "18.210.121.9:8080", "1",
+        "18.210.121.9:8081", "1",
+        "18.210.121.9:8082", "1",
+        "18.210.121.9:8083", "1",
+        "18.210.121.9:8084", "1"
+    ]
+}
