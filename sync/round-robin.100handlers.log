@@ -1,0 +1,150 @@
+[2018-08-04T18:36:12.029975] handler: hdl39_0 status: 200 in: 38923 ms
+[2018-08-04T18:36:28.638847] handler: hdl53_0 status: 200 in: 16607 ms
+[2018-08-04T18:36:40.011640] handler: hdl64_0 status: 200 in: 11371 ms
+[2018-08-04T18:36:54.088284] handler: hdl10_0 status: 200 in: 14075 ms
+[2018-08-04T18:37:05.514039] handler: hdl21_0 status: 200 in: 11424 ms
+[2018-08-04T18:37:11.775378] handler: hdl0_0 status: 200 in: 6260 ms
+[2018-08-04T18:37:13.408964] handler: hdl34_0 status: 200 in: 1632 ms
+[2018-08-04T18:37:46.203706] handler: hdl70_0 status: 200 in: 32793 ms
+[2018-08-04T18:39:02.003281] handler: hdl38_0 status: 200 in: 75798 ms
+[2018-08-04T18:39:20.148015] handler: hdl89_0 status: 200 in: 18143 ms
+[2018-08-04T18:39:21.775853] handler: hdl91_0 status: 200 in: 1626 ms
+[2018-08-04T18:39:24.155458] handler: hdl87_0 status: 200 in: 2378 ms
+[2018-08-04T18:39:30.377666] handler: hdl89_0 status: 200 in: 6221 ms
+[2018-08-04T18:39:32.076249] handler: hdl26_0 status: 200 in: 1697 ms
+[2018-08-04T18:39:54.486699] handler: hdl95_0 status: 200 in: 22409 ms
+[2018-08-04T18:39:54.656203] handler: hdl62_0 status: 200 in: 168 ms
+[2018-08-04T18:39:58.951622] handler: hdl46_0 status: 200 in: 4294 ms
+[2018-08-04T18:40:00.640796] handler: hdl95_0 status: 200 in: 1688 ms
+[2018-08-04T18:40:02.383168] handler: hdl75_0 status: 200 in: 1741 ms
+[2018-08-04T18:40:02.550916] handler: hdl37_0 status: 200 in: 166 ms
+[2018-08-04T18:40:03.483933] handler: hdl95_0 status: 200 in: 932 ms
+[2018-08-04T18:40:03.590883] handler: hdl28_0 status: 200 in: 106 ms
+[2018-08-04T18:40:04.538727] handler: hdl42_0 status: 200 in: 946 ms
+[2018-08-04T18:40:05.427880] handler: hdl63_0 status: 200 in: 888 ms
+[2018-08-04T18:40:06.388800] handler: hdl4_0 status: 200 in: 959 ms
+[2018-08-04T18:40:08.111643] handler: hdl63_0 status: 200 in: 1721 ms
+[2018-08-04T18:40:11.332401] handler: hdl9_0 status: 200 in: 3219 ms
+[2018-08-04T18:40:12.220732] handler: hdl43_0 status: 200 in: 887 ms
+[2018-08-04T18:40:13.100166] handler: hdl82_0 status: 200 in: 878 ms
+[2018-08-04T18:40:17.033569] handler: hdl0_0 status: 200 in: 3932 ms
+[2018-08-04T18:40:17.219162] handler: hdl3_0 status: 200 in: 184 ms
+[2018-08-04T18:40:17.326695] handler: hdl93_0 status: 200 in: 106 ms
+[2018-08-04T18:40:38.932720] handler: hdl85_0 status: 200 in: 21604 ms
+
+Handler: 'hdl39_0'
+	Avg latency: 38923
+	Total requests: 1
+
+Handler: 'hdl53_0'
+	Avg latency: 16607
+	Total requests: 1
+
+Handler: 'hdl64_0'
+	Avg latency: 11371
+	Total requests: 1
+
+Handler: 'hdl10_0'
+	Avg latency: 14075
+	Total requests: 1
+
+Handler: 'hdl21_0'
+	Avg latency: 11424
+	Total requests: 1
+
+Handler: 'hdl0_0'
+	Avg latency: 5096
+	Total requests: 2
+
+Handler: 'hdl34_0'
+	Avg latency: 1632
+	Total requests: 1
+
+Handler: 'hdl70_0'
+	Avg latency: 32793
+	Total requests: 1
+
+Handler: 'hdl38_0'
+	Avg latency: 75798
+	Total requests: 1
+
+Handler: 'hdl89_0'
+	Avg latency: 12182
+	Total requests: 2
+
+Handler: 'hdl91_0'
+	Avg latency: 1626
+	Total requests: 1
+
+Handler: 'hdl87_0'
+	Avg latency: 2378
+	Total requests: 1
+
+Handler: 'hdl26_0'
+	Avg latency: 1697
+	Total requests: 1
+
+Handler: 'hdl95_0'
+	Avg latency: 8343
+	Total requests: 3
+
+Handler: 'hdl62_0'
+	Avg latency: 168
+	Total requests: 1
+
+Handler: 'hdl46_0'
+	Avg latency: 4294
+	Total requests: 1
+
+Handler: 'hdl75_0'
+	Avg latency: 1741
+	Total requests: 1
+
+Handler: 'hdl37_0'
+	Avg latency: 166
+	Total requests: 1
+
+Handler: 'hdl28_0'
+	Avg latency: 106
+	Total requests: 1
+
+Handler: 'hdl42_0'
+	Avg latency: 946
+	Total requests: 1
+
+Handler: 'hdl63_0'
+	Avg latency: 1305
+	Total requests: 2
+
+Handler: 'hdl4_0'
+	Avg latency: 959
+	Total requests: 1
+
+Handler: 'hdl9_0'
+	Avg latency: 3219
+	Total requests: 1
+
+Handler: 'hdl43_0'
+	Avg latency: 887
+	Total requests: 1
+
+Handler: 'hdl82_0'
+	Avg latency: 878
+	Total requests: 1
+
+Handler: 'hdl3_0'
+	Avg latency: 184
+	Total requests: 1
+
+Handler: 'hdl93_0'
+	Avg latency: 106
+	Total requests: 1
+
+Handler: 'hdl85_0'
+	Avg latency: 21604
+	Total requests: 1
+
+Aggregate: 
+	Avg latency: 9266
+	Throughput: 33
+	Failed requests: 0

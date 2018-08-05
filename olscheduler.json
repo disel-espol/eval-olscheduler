@@ -2,7 +2,7 @@
     "host": "localhost",
     "port": 8080,
     "balancer": "pkg-aware",
-    "load-threshold": 3,
+    "load-threshold": 5,
     "registry": "/home/ubuntu/eval-olscheduler/olscheduler-registries/registry_100_5.json",
     "workers": [
         "18.205.202.225:8081", "1",
