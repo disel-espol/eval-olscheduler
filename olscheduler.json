@@ -1,14 +1,32 @@
 {
-    "host": "localhost",
-    "port": 8080,
-    "balancer": "pkg-aware",
-    "load-threshold": 5,
-    "registry": "/home/ubuntu/eval-olscheduler/olscheduler-registries/registry_100_5.json",
-    "workers": [
-        "18.205.202.225:8081", "1",
-        "18.205.202.225:8082", "1",
-        "18.205.202.225:8083", "1",
-        "18.205.202.225:8084", "1",
-        "18.205.202.225:8085", "1"
-    ]
+  "_comment": "Configuración de OLScheduler para experimento Package Aware Scheduler",
+  "_usage": "Actualiza 'registry' con el path absoluto a tu registry_100_5.json",
+  
+  "host": "localhost",
+  "_host_comment": "Hostname donde OLScheduler escucha (localhost para acceso local, 0.0.0.0 para externo)",
+  
+  "port": 8080,
+  "_port_comment": "Puerto donde OLScheduler escucha las peticiones HTTP",
+  
+  "balancer": "pkg-aware",
+  "_balancer_comment": "Algoritmo de balanceo: 'pkg-aware', 'least-loaded', 'round-robin', 'random', 'consistent-hashing-bounded'",
+  "_balancer_description": "pkg-aware agrupa handlers con dependencias similares para reducir cold starts",
+  
+  "load-threshold": 100,
+  "_load-threshold_comment": "Umbral de carga para pkg-aware (número de handlers activos antes de usar otro worker)",
+  "_load-threshold_values": "Valores comunes: 5 (agresivo), 50 (moderado), 100 (conservador), 150+ (muy conservador)",
+  
+  "registry": "./olscheduler-registries/registry_100_5.json",
+  "_registry_comment": "Path al archivo JSON con información de dependencias de handlers",
+  "_registry_note": "Usa path relativo (.) o actualiza con tu path absoluto",
+  
+  "workers": [
+    "localhost:8081", "1",
+    "localhost:8082", "1",
+    "localhost:8083", "1",
+    "localhost:8084", "1",
+    "localhost:8085", "1"
+  ],
+  "_workers_comment": "Lista de workers: ['host:port', 'peso', ...]. Peso determina proporción de requests",
+  "_workers_note": "Para Docker, asegúrate que estos puertos coincidan con los workers iniciados"
 }

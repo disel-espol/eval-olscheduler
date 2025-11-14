@@ -1,0 +1,166 @@
+# Dockerfile modernizado para el experimento Package Aware Scheduler
+# Soporta Docker-in-Docker y arquitecturas ARM64/AMD64
+
+FROM ubuntu:20.04
+
+# Configuración para evitar prompts interactivos
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/Guayaquil
+
+# Información del build
+LABEL maintainer="OLScheduler Contributors"
+LABEL description="Container for running Package Aware Scheduler experiments with OpenLambda"
+LABEL version="1.0-modern"
+
+# ============================================================
+# PASO 1: Instalar dependencias base del sistema
+# ============================================================
+RUN apt-get update && apt-get install -y \
+    # Herramientas de compilación
+    build-essential \
+    make \
+    # Control de versiones
+    git \
+    # Utilidades de red y descarga
+    curl \
+    wget \
+    # Editores
+    vim \
+    nano \
+    # Python y pip
+    python3 \
+    python3-pip \
+    # Utilidades de sistema
+    net-tools \
+    lsof \
+    iproute2 \
+    procps \
+    ca-certificates \
+    gnupg \
+    lsb-release \
+    # Docker CLI (para Docker-in-Docker)
+    apt-transport-https \
+    software-properties-common \
+    && rm -rf /var/lib/apt/lists/*
+
+# ============================================================
+# PASO 2: Instalar Docker CLI para Docker-in-Docker
+# ============================================================
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
+    https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
+    | tee /etc/apt/sources.list.d/docker.list > /dev/null \
+    && apt-get update \
+    && apt-get install -y docker-ce-cli \
+    && rm -rf /var/lib/apt/lists/*
+
+# ============================================================
+# PASO 3: Instalar Go con detección de arquitectura
+# ============================================================
+ARG GO_VERSION=1.21.5
+RUN ARCH=$(dpkg --print-architecture) && \
+    echo "Instalando Go para arquitectura: ${ARCH}" && \
+    wget -q https://go.dev/dl/go${GO_VERSION}.linux-${ARCH}.tar.gz && \
+    tar -C /usr/local -xzf go${GO_VERSION}.linux-${ARCH}.tar.gz && \
+    rm go${GO_VERSION}.linux-${ARCH}.tar.gz
+
+# Configurar variables de entorno de Go
+ENV GOPATH=/root/go
+ENV PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+
+# Verificar instalación de Go
+RUN go version
+
+# ============================================================
+# PASO 4: Instalar dependencias Python
+# ============================================================
+RUN pip3 install --no-cache-dir \
+    requests \
+    numpy \
+    && python3 -c "import requests; import numpy; print('Python modules OK')"
+
+# ============================================================
+# PASO 5: Configurar directorio de trabajo
+# ============================================================
+WORKDIR /root/olscheduler-experiment
+
+# ============================================================
+# PASO 6: Clonar y compilar OpenLambda
+# ============================================================
+RUN echo "Clonando OpenLambda..." && \
+    git clone https://github.com/open-lambda/open-lambda.git && \
+    cd open-lambda && \
+    echo "Compilando OpenLambda..." && \
+    cd go && \
+    go build -o ../ol && \
+    mkdir -p ../bin && \
+    ln -s ../ol ../bin/admin && \
+    cd ../.. && \
+    echo "OpenLambda compilado exitosamente" && \
+    /root/olscheduler-experiment/open-lambda/bin/admin help
+
+# ============================================================
+# PASO 7: Clonar Pipbench
+# ============================================================
+RUN echo "Clonando Pipbench..." && \
+    git clone https://github.com/open-lambda/pipbench.git && \
+    echo "Pipbench clonado exitosamente"
+
+# ============================================================
+# PASO 8: Crear estructura de directorios para experimento
+# ============================================================
+RUN mkdir -p \
+    /tmp/ol-workers \
+    /tmp/olscheduler-registries \
+    /root/logs
+
+# ============================================================
+# PASO 9: Configurar variables de entorno
+# ============================================================
+ENV OL_ADMIN=/root/olscheduler-experiment/open-lambda/bin/admin
+ENV OL_BASE_DIR=/tmp/ol-workers
+ENV PIPBENCH_DIR=/root/olscheduler-experiment/pipbench
+
+# ============================================================
+# PASO 10: Exponer puertos
+# ============================================================
+# Puerto 8080: OLScheduler
+# Puertos 8081-8085: Workers de OpenLambda
+EXPOSE 8080 8081 8082 8083 8084 8085
+
+# ============================================================
+# PASO 11: Healthcheck
+# ============================================================
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8080/status || exit 1
+
+# ============================================================
+# PASO 12: Punto de entrada
+# ============================================================
+# Mantener el contenedor corriendo para poder ejecutar comandos interactivamente
+CMD ["/bin/bash"]
+
+# ============================================================
+# NOTAS DE USO:
+# ============================================================
+# 1. Construir la imagen:
+#    docker build -f docker/Dockerfile.modern -t olscheduler-experiment:latest .
+#
+# 2. Ejecutar con Docker-in-Docker (requiere privilegios):
+#    docker run -it --privileged \
+#      --name ol-experiment \
+#      -v /var/run/docker.sock:/var/run/docker.sock \
+#      -p 8080-8085:8080-8085 \
+#      olscheduler-experiment:latest
+#
+# 3. Copiar archivos de configuración al contenedor:
+#    docker cp eval-olscheduler ol-experiment:/root/olscheduler-experiment/
+#    docker cp olscheduler ol-experiment:/root/olscheduler-experiment/
+#
+# 4. Ejecutar el experimento:
+#    docker exec -it ol-experiment bash
+#    cd /root/olscheduler-experiment/eval-olscheduler/docker
+#    ./start_experiment.sh
+#
+# ============================================================
+
