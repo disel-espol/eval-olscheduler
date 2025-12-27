@@ -1,0 +1,41 @@
+{
+  "_comment": "Configuración de ejemplo para OLScheduler ejecutándose en Docker",
+  "_usage": "Copia este archivo y ajusta los paths según tu entorno",
+  
+  "host": "localhost",
+  "_host_note": "Hostname donde OLScheduler escucha (localhost para acceso local, 0.0.0.0 para acceso externo)",
+  
+  "port": 8080,
+  "_port_note": "Puerto donde OLScheduler escucha las peticiones HTTP",
+  
+  "balancer": "pkg-aware",
+  "_balancer_note": "Algoritmo de balanceo de carga. Opciones: 'pkg-aware', 'least-loaded', 'round-robin', 'random', 'consistent-hashing-bounded'",
+  "_balancer_description": {
+    "pkg-aware": "Agrupa handlers con dependencias similares en el mismo worker (reduce cold starts)",
+    "least-loaded": "Enruta al worker con menos carga actual",
+    "round-robin": "Distribución circular entre todos los workers",
+    "random": "Selección aleatoria de worker",
+    "consistent-hashing-bounded": "Hash consistente con límite de carga por worker"
+  },
+  
+  "load-threshold": 100,
+  "_load-threshold_note": "Umbral de carga para el algoritmo pkg-aware (número de handlers activos antes de considerar otro worker)",
+  "_load-threshold_recommendation": "Valores comunes: 5 (agresivo), 50 (moderado), 100 (conservador), 150+ (muy conservador)",
+  
+  "registry": "/tmp/olscheduler-registries/registry_100_5.json",
+  "_registry_note": "Path al archivo JSON con el registry de handlers y sus dependencias",
+  "_registry_description": "Este archivo contiene información sobre qué paquetes Python necesita cada handler",
+  
+  "workers": [
+    "localhost:8081", "1",
+    "localhost:8082", "1",
+    "localhost:8083", "1",
+    "localhost:8084", "1",
+    "localhost:8085", "1"
+  ],
+  "_workers_note": "Lista de workers disponibles en formato: 'host:port', 'peso', 'host:port', 'peso', ...",
+  "_workers_description": "El peso determina la proporción de requests que recibe cada worker (1 = peso igual para todos)",
+  "_workers_example_weighted": ["localhost:8081", "2", "localhost:8082", "1"],
+  "_workers_example_weighted_note": "En este ejemplo, worker 8081 recibiría el doble de carga que 8082"
+}
+

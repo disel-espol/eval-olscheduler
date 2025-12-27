@@ -1,0 +1,131 @@
+{
+  "_comment": "Configuración de ejemplo para un Worker de OpenLambda con sandbox Docker",
+  "_usage": "Copia este archivo a tu directorio de worker y personaliza los valores según necesites",
+  
+  "worker_dir": "/tmp/ol-workers/worker-8081/worker",
+  "_worker_dir_note": "Directorio donde el worker almacena su estado y datos",
+  
+  "worker_url": "localhost",
+  "_worker_url_note": "Hostname o IP donde el worker escucha",
+  
+  "worker_port": "8081",
+  "_worker_port_note": "Puerto donde el worker escucha (cambia para cada worker: 8081-8085)",
+  
+  "log_output": true,
+  "_log_output_note": "Si es true, el worker imprime logs en stdout/stderr",
+  
+  "sandbox": "docker",
+  "_sandbox_note": "Tipo de sandbox: 'docker' (recomendado) o 'sock' (requiere cgroups nativos)",
+  
+  "server_mode": "lambda",
+  "_server_mode_note": "Modo de operación del servidor",
+  
+  "registry": "file:///tmp/ol-workers/worker-8081/registry",
+  "_registry_note": "Ubicación del registry de handlers (filesystem local)",
+  
+  "registry_cache_ms": 5000,
+  "_registry_cache_ms_note": "Tiempo en milisegundos para cachear información del registry",
+  
+  "Pkgs_dir": "/tmp/ol-workers/worker-8081/lambda/packages",
+  "_Pkgs_dir_note": "Directorio donde se almacenan los paquetes Python instalados",
+  
+  "pip_mirror": "",
+  "_pip_mirror_note": "URL de un mirror de PyPI (opcional, deja vacío para usar PyPI oficial)",
+  
+  "mem_pool_mb": 7337,
+  "_mem_pool_mb_note": "Memoria total disponible para el pool de contenedores (en MB)",
+  
+  "import_cache_tree": "/tmp/ol-workers/worker-8081/default-zygotes-40.json",
+  "_import_cache_tree_note": "Archivo de configuración para el cache de imports (zygotes)",
+  
+  "sock_base_path": "/tmp/ol-workers/worker-8081/lambda",
+  "_sock_base_path_note": "Path base para el sandbox sock (no usado con sandbox docker)",
+  
+  "sandbox_config": {},
+  "_sandbox_config_note": "Configuraciones adicionales específicas del sandbox",
+  
+  "docker": {
+    "runtime": "",
+    "_runtime_note": "Docker runtime específico (vacío = default)",
+    
+    "base_image": "ol-min",
+    "_base_image_note": "Imagen Docker base para los contenedores de handlers"
+  },
+  
+  "limits": {
+    "procs": 10,
+    "_procs_note": "Número máximo de procesos por handler",
+    
+    "mem_mb": 50,
+    "_mem_mb_note": "Límite de memoria por handler (en MB)",
+    
+    "cpu_percent": 100,
+    "_cpu_percent_note": "Porcentaje de CPU disponible para el handler (100 = 1 core)",
+    
+    "swappiness": 0,
+    "_swappiness_note": "Configuración de swap del kernel (0 = mínimo swap)",
+    
+    "runtime_sec": 30,
+    "_runtime_sec_note": "Tiempo máximo de ejecución por invocación (en segundos)"
+  },
+  
+  "installer_limits": {
+    "procs": 0,
+    "_procs_note": "Límite de procesos para instalación de paquetes (0 = sin límite)",
+    
+    "mem_mb": 250,
+    "_mem_mb_note": "Límite de memoria para instalación de paquetes (en MB)",
+    
+    "cpu_percent": 0,
+    "_cpu_percent_note": "Límite de CPU para instalación (0 = sin límite)",
+    
+    "swappiness": 0,
+    "_swappiness_note": "Configuración de swap para instalación",
+    
+    "runtime_sec": 300,
+    "_runtime_sec_note": "Tiempo máximo para instalación de paquetes (en segundos)"
+  },
+  
+  "features": {
+    "reuse_cgroups": false,
+    "_reuse_cgroups_note": "Reutilizar cgroups entre invocaciones (solo para sock sandbox)",
+    
+    "import_cache": false,
+    "_import_cache_note": "DEBE SER FALSE para sandbox docker (solo funciona con sock)",
+    
+    "downsize_paused_mem": true,
+    "_downsize_paused_mem_note": "Reducir memoria de contenedores pausados",
+    
+    "enable_seccomp": true,
+    "_enable_seccomp_note": "Habilitar filtros de seguridad seccomp"
+  },
+  
+  "trace": {
+    "cgroups": false,
+    "_cgroups_note": "Habilitar logs de debug para cgroups",
+    
+    "memory": false,
+    "_memory_note": "Habilitar logs de debug para gestión de memoria",
+    
+    "evictor": false,
+    "_evictor_note": "Habilitar logs de debug para eviction de contenedores",
+    
+    "package": false,
+    "_package_note": "Habilitar logs de debug para instalación de paquetes",
+    
+    "latency": false,
+    "_latency_note": "Habilitar logs de métricas de latencia"
+  },
+  
+  "storage": {
+    "root": "private",
+    "_root_note": "Tipo de almacenamiento root: 'private' (aislado) o 'shared'",
+    
+    "scratch": "",
+    "_scratch_note": "Directorio para almacenamiento temporal (vacío = default)",
+    
+    "code": "",
+    "_code_note": "Directorio para código de handlers (vacío = default)"
+  }
+}
+
